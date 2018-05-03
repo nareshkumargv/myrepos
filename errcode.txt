@@ -1,0 +1,25 @@
+   getClientbyName(clientname:any) {       
+        console.log(clientname); 
+        var ans = confirm("Do you want to customer with name: " + clientname.userName);       
+
+        this._clientService.getClientByName(clientname.userName).subscribe(clients => {
+            this.clientlist = clients;
+            console.log(this.clientlist);
+        });
+
+html
+ <table class='table'>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>             
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let clist of clientlist">
+                <td>{{ clist.id }}</td>
+                <td>{{ clist.clientname }}</td>
+                <td>{{ clist.ownername }}</td>
+            </tr>
+        </tbody>
+    </table>
