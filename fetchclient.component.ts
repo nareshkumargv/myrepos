@@ -25,9 +25,12 @@ export class FetchClientComponent implements OnInit, OnDestroy {
     pageTitle: string = 'Current User';
     user: IUser;
     errorMessage: string;
-    ownername: any;
+    clientname: any;
 
     public cntList: ClientData[];
+    clientlist: ClientData[]=[];
+    cntdata: ClientData[] = [];
+   // var resultArray: Array<any> = [];
 
     constructor(public http: Http, private _router: Router,
         private _userService: UserService,
@@ -35,7 +38,7 @@ export class FetchClientComponent implements OnInit, OnDestroy {
         private _clientService: ClientService,
         public fb: FormBuilder)
     {
-        this.getClients();
+        this.getClients(); 
        
     }
 
@@ -49,8 +52,10 @@ export class FetchClientComponent implements OnInit, OnDestroy {
         this.UserSubscription = this._userService.getCurrentUser().subscribe(
             user => {
                 this.user = user;
-                this.ownername = user;
-                console.log(this.ownername); 
+                console.log(this.user); 
+                this.clientname = user;
+                console.log(this.clientname); 
+                this.getClientbyName(this.clientname);
             },
             error => {
                 this.errorMessage = <any>error;
@@ -68,7 +73,7 @@ export class FetchClientComponent implements OnInit, OnDestroy {
                 }
             });
 
-        this.getClientbyID(this.ownername);
+      //  this.getClientbyName(this.ownername);
     }
 
     getCurrentUser() {
@@ -91,17 +96,18 @@ export class FetchClientComponent implements OnInit, OnDestroy {
         )
     } 
 
-    getClientbyID(ownername: any) {
-        console.log(ownername);  
-    //    var ans = confirm("Do you want to customer with Id: " + ownername);
-    //    if (ans) {
-    //        this._clientService.getClientById(ownername).subscribe(
-    //            data => this.cntList = data
-    //        )
-    //    }
-    //    //this._clientService.getClients().subscribe(
-    //    //    data => this.cntList = data
-    //    //)
+    getClientbyName(clientname: any) { 
+        var resultArray: Array<any> = [];
+        console.log(clientname); 
+        var ans = confirm("Do you want to customer with name: " + clientname.userName);       
+
+        this._clientService.getClientByName(clientname.userName).subscribe(clients => {
+            this.clientlist = clients;
+            console.log(this.clientlist);
+            resultArray.push(this.clientlist);
+            console.log(resultArray);
+        });
+     
     } 
 
     delete(cid:any) {

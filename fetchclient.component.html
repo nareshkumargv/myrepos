@@ -1,0 +1,60 @@
+﻿<div class="container">
+
+    <h1>Client Data</h1>
+
+    <p>This component demonstrates fetching Employee data from the server.</p>
+
+    <p *ngIf="!cntList"><em>Loading...</em></p>
+
+    <div *ngIf='user.isLoggedIn' class="ui-auth-div">
+       {{user.userName}} 
+    </div>
+
+    <p>
+        <a [routerLink]="['/register-client']">Create New</a>
+    </p>
+
+    <table class='table' *ngIf="cntList">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Owner Name</th>               
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cnt of cntList">
+                <td>{{ cnt.id }}</td>
+                <td>{{ cnt.clientname }}</td>
+                <td>{{ cnt.ownername }}</td>
+               
+                <td>
+                <td>
+                    <a [routerLink]="['/client/edit/', cnt.id]">Edit</a> |                   
+                   
+                    <a [routerLink]="" (click)="delete(cnt.id)">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr/>
+
+    {{clientlist.clientname}},{{clientlist.ownername}}
+    <table class='table'>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>             
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let clist of resultArray">
+                <td>{{ clist.id }}</td>
+                <td>{{ clist.clientname }}</td>
+                <td>{{ clist.ownername }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
